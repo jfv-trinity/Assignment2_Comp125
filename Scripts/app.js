@@ -42,13 +42,13 @@ functions for website go here
         let jumbotron = document.getElementsByClassName("jumbotron")[0];
         if (jumbotron) 
         {
-            // step 2 create a new element
+            // step 2 create new elements
             let newParagraph = document.createElement("p");
             let newImage = document.createElement("block")
             
         
 
-            // step 3 configure the new element
+            // step 3 configure the new elements
             newParagraph.textContent =
                 `
                 
@@ -149,10 +149,11 @@ functions for website go here
     {
         let contactForm = document.forms[0];
 
+
         if(contactForm)
         {
             contactForm.noValidate = true;
-            document.body.style.backgroundColor = "black";
+            document.body.style.backgroundColor = "white";
             let errorMessage = document.getElementById("errorMessage");
 
             let firstName = document.getElementById("firstName");
@@ -189,9 +190,9 @@ functions for website go here
 
             // creates a "hook" or reference to the button element with an id of "submitButton"
             let submitButton = document.getElementById("submitButton");
-
             submitButton.addEventListener("click", (event) =>
             {
+             
                 event.preventDefault();
                 location.href="index.html"
             });
@@ -213,7 +214,7 @@ functions for website go here
        let success = addParagraphsToJumbotron();
 
 
-       let formValidated = validateForm();
+       
 
 
     } 
@@ -221,15 +222,13 @@ functions for website go here
         
         let success = addParagraphsToProjecttron();
  
-        let formValidated = validateForm();
+      
     
  
      } 
 
-     if(true && title == "about me"){
-        
-        let success = addParagraphsToAbouttron();
- 
+     if(true && title == "contact me"){
+
         let formValidated = validateForm();
         
  
