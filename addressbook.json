@@ -1,0 +1,40 @@
+{
+    "addressBook":
+    [
+        {
+        "firstName": "Illidan",
+        "lastName": "Stormrage",
+        "emailAddress": "howtobeprepared@handsomeelf.com",
+        "contactNumber": "4169432986",
+        "shortMessage": "You are not PREPARED!" 
+        },
+        {
+        "firstName": "Isyara",
+        "lastName": "Shaiad",
+        "emailAddress": "TchinomySaint1@Ark.com",
+        "contactNumber": "4165555556",
+        "shortMessage": "We are polite so we do not speak what we think." 
+        },
+        {
+        "firstName": "Anaxagoras",
+        "lastName": "Unfallen",
+        "emailAddress": "Starseeker@Deeproots.com",
+        "contactNumber": "4165555557",
+        "shortMessage": "Overtime change occurs yet the world remains the same..." 
+        },
+        {
+        "firstName": "John",
+        "lastName": "Chief",
+        "emailAddress": "Supersoldier@UNSC.com",
+        "contactNumber": "4165555558",
+        "shortMessage": "Cortana" 
+        },
+        {
+        "firstName": "Tali",
+        "lastName": "Zorah",
+        "emailAddress": "Innocentquarian@Migrant.com",
+        "contactNumber": "4165555559",
+        "shortMessage": "Shephard?" 
+        }
+    ]
+}

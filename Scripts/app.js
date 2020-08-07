@@ -10,232 +10,413 @@ functions for website go here
 // IIFE -Immediately Ivoked Function Expression
 (function(){
 
-    function highlightActiveLink() 
+    function highlightActiveLink(id) 
     {
-        let title = document.title;
-
-        title = title.toLowerCase();
-
-
         let navAnchors = document.querySelectorAll("li a");
 
         for (const anchor of navAnchors) 
         {
+         anchor.className = "nav-link";
+        }
 
-            let anchorString = anchor.getAttribute("href");
-            anchorString = anchorString.substr(0, anchorString.length - 5);
+        for (const anchor of navAnchors) 
+        {
+            let anchorString = anchor.getAttribute("id");
 
-            
-            if ((title === "joseph's den") && (anchorString === "index") || (title === anchorString) || (title === "contact me") && (anchorString === "contact")) 
+            if (id === anchorString)
             {
                 anchor.className = "nav-link active";
             }
         }
-
-        return title;
     }
 
-
-    function addParagraphsToJumbotron() 
-    {
-        // step 1 hook into the spot (element) on the page
-        let jumbotron = document.getElementsByClassName("jumbotron")[0];
-        if (jumbotron) 
-        {
-            // step 2 create new elements
-            let newParagraph = document.createElement("p");
-            let newImage = document.createElement("block")
-            
-        
-
-            // step 3 configure the new elements
-            newParagraph.textContent =
-                `
-                
-                Welcome to my lounge! My name is Joseph Volpe and I am an aspiring programmer/animator.
-                
-                `;
-
-            // step 4 attach the new element
-            jumbotron.appendChild(newParagraph);
-
-
-            // back to step 2 - create a new element
-            let newDiv = document.createElement("div");
-
-            // step 3 - configure
-            newDiv.innerHTML =
-                `
-                <p id="secondParagraph">
-                "It's the minor details that matter"
-                </p>
-                <img src="./Assets/images/unknown.png" width="300" height="300" alt="Photo" class="center">
-                `;
-
-            // step 4 attach the new element
-            jumbotron.appendChild(newDiv);
-            document.body.style.backgroundColor = "whitesmoke";
-            return true;
-
-        }
-
-        return false;
-    }
-
-    function addParagraphsToProjecttron() 
-    {
-        // step 1 hook into the spot (element) on the page
-        let projecttron = document.getElementsByClassName("projecttron")[0];
-
-        if (projecttron) 
-        {
-            // step 2 create a new element
-            let newParagraph = document.createElement("p");
-            
-
-            // step 3 configure the new element
-            newParagraph.textContent =
-                `
-                Not currently working on a specific project.
-                Currently interested in: Making a simple adobe animation, creating a web application that interacts with PC backgrounds (lacking knowledge to start this project), and making a unique discord bot that reads data and gives appropriate response to the user.
-                `
-               ;
-
-            // step 4 attach the new element
-            projecttron.appendChild(newParagraph);
-
-
-            // back to step 2 - create a new element
-            let newDiv = document.createElement("div");
-
-            // step 3 - configure
-            newDiv.innerHTML =
-                `
-                <br></br>
-                <img src="./Assets/images/Discord.jpg" width="300" height="300" alt="Photo" align="left" style="padding-right: 20px; padding left: 60px;">
-                <br></br>
-                <h2>Discord Project:</h2>
-                <br></br>
-                <p id="secondParagraph">
-                    I have been interested in working with discord bots for awhile since they provide an excellent template to build off of. This will also allow me to quickly share my work,
-                    with others who are interested in using what i make or just easy access for me to use privately.
-                </p>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <img src="./Assets/images/adobe-animate-logo-png-transparent.png" width="300" height="300" alt="Photo" align="left" style="padding-right: 20px; padding left: 60px;">
-                <p id="secondParagraph">
-                <h2>Animation Project:</h2>
-                <br></br>
-                    While i am working towards being  a programmer i still want to expand as a creator. With this project in mind i will be able to do minor animation with adobe and possibly use that animation in something i make in the future.
-                <br></br>
-                <br></br>
-                </p>
-                `;
-            
-                
-
-            // step 4 attach the new element
-            projecttron.appendChild(newDiv);
-            return true;
-
-        }
-
-        return false;
-    }
 
     function validateForm()
     {
+        let contact = new objects.Contact();
+
         let contactForm = document.forms[0];
 
+        contactForm.noValidate = true;
 
-        if(contactForm)
+        let errorMessage = document.getElementById("errorMessage");
+
+        let firstName = document.getElementById("firstName");
+        firstName.addEventListener("blur", (event) => 
         {
-            contactForm.noValidate = true;
-            document.body.style.backgroundColor = "white";
-            let errorMessage = document.getElementById("errorMessage");
-
-            let firstName = document.getElementById("firstName");
-            firstName.addEventListener("blur", (event) => 
+            if(firstName.value.length < 2)
             {
-                if(firstName.value.length < 2)
-                {
-                    firstName.focus();
-                    errorMessage.hidden = false;
-                    errorMessage.textContent = "Please enter a Valid First Name with a length of 2 or more characters"; 
-                }
-                else
-                {
-                    errorMessage.hidden = true;
-                }
-            });
-
-            let lastName = document.getElementById("lastName");
-            lastName.addEventListener("blur", (event) => 
+                firstName.focus();
+                errorMessage.hidden = false;
+                errorMessage.textContent = "Please enter a Valid First Name with a length of 2 or more characters"; 
+            }
+            else
             {
-                if(lastName.value.length < 2)
-                {
-                    lastName.focus();
-                    errorMessage.hidden = false;
-                    errorMessage.textContent = "Please enter a Valid Last Name with a length of 2 or more characters"; 
-                }
-                else
-                {
-                    errorMessage.hidden = true;
-                }
-            });
+                contact.firstName = firstName.value;
+                errorMessage.hidden = true;
+            }
+        });
 
-
-
-            // creates a "hook" or reference to the button element with an id of "submitButton"
-            let submitButton = document.getElementById("submitButton");
-            submitButton.addEventListener("click", (event) =>
+        let lastName = document.getElementById("lastName");
+        lastName.addEventListener("blur", (event) => 
+        {
+            if(lastName.value.length < 2)
             {
-             
-                event.preventDefault();
-                location.href="index.html"
-            });
-        }
-        return false;
+                lastName.focus();
+                errorMessage.hidden = false;
+                errorMessage.textContent = "Please enter a Valid Last Name with a length of 2 or more characters"; 
+            }
+            else
+            {
+                contact.lastName = lastName.value;
+                errorMessage.hidden = true;
+            }
+        });
+
+        let contactNumber = document.getElementById("contactNumber");
+        contactNumber.addEventListener("blur", (event) =>
+        {
+            let contactNumberPattern = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/;
+            if(!contactNumberPattern.test(contactNumber.value))
+            {
+                contactNumber.focus();
+                errorMessage.hidden = false;
+                errorMessage.textContent = "Please enter a Valid Contact Number"; 
+            }
+            else
+            {
+                contact.contactNumber = contactNumber.value;
+                errorMessage.hidden = true;
+            }
+            
+        });
+
+        let emailAddress = document.getElementById("emailAddress");
+        emailAddress.addEventListener("blur", (event) =>
+        {
+            let emailPattern = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if(!emailPattern.test(emailAddress.value))
+            {
+                emailAddress.focus();
+                errorMessage.hidden = false;
+                errorMessage.textContent = "Please enter a Valid email address"; 
+            }
+            else
+            {
+                contact.emailAddress = emailAddress.value;
+                errorMessage.hidden = true;
+            }
+            
+        });
+
+        let shortMessage = document.getElementById("shortMessage");
+        shortMessage.addEventListener("blur", (event) => {
+            contact.shortMessage = shortMessage.value;
+        });
+        
+        // creates a "hook" or reference to the button element with an id of "submitButton"
+        let submitButton = document.getElementById("submitButton");
+
+        submitButton.addEventListener("click", (event) =>
+        {
+            event.preventDefault();
+            console.log("Submit Button Clicked");
+
+            console.log(contact.toString());
+
+            console.log(contact.toJSON());
+
+        });
     }
 
-    
+    function setPageContent(id)
+    {
+        document.title = id;
+
+        window.history.pushState("", id, "/"+id.toLowerCase());
+
+        highlightActiveLink(id);
+
+         // content switcher
+        switch(id)
+        {
+            case "Home":
+                HomeContent();
+                break;
+            case "Contact":
+                ContactContent();
+                break;
+            case "Products":
+                ProductsContent();
+                break;
+            case "Services":
+                ServicesContent();
+                break;
+            case "About":
+                AboutContent();
+                break;
+        }
+
+        loadFooter();
+    }
+
+    function InitializeSite()
+    {
+        console.info("Header Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "./home.html");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+                let header = document.getElementsByTagName("header")[0];
+
+                let headerData = XHR.responseText;
+
+                header.innerHTML = headerData;
+
+                setPageContent("Home");
+
+                let navLinks = document.getElementsByTagName("a");
+
+                for (const link of navLinks) 
+                {
+                    link.addEventListener("click", (event) =>{
+                        event.preventDefault();
+
+                        let id = link.getAttribute("id");
+
+                        setPageContent(id);
+
+                    });
+                }
+            }
+        });
+    }
+
+    function loadAddressBookData()
+    {
+        console.info("AddressBook Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "addressbook.json");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        // step 4 - register the readystate event 
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+
+                let contactDataFile = JSON.parse(XHR.responseText);
+                let addressBook = contactDataFile.addressBook;
+
+                console.log(addressBook);
+
+                let contactList = [];
+                // let contactList = new Array<objects.Contact>();
+
+                for (const record of addressBook) 
+                {
+                    let contact = new objects.Contact();
+                    contact.setContact(record);
+                    contactList.push(contact);
+                }
+
+                console.log(contactList);
+
+                let tableBody = document.getElementById("tableBody");
+                for (const contact of contactList) 
+                {
+                    let row = document.createElement('tr');
+                    row.innerHTML = 
+                    `
+                    <td>${contact.firstName}</td>
+                    <td>${contact.lastName}</td>
+                    <td>${contact.contactNumber}</td>
+                    <td>${contact.emailAddress}</td>
+                    `
+                    tableBody.appendChild(row);
+                }
+
+               
+            }
+        });
+    }
+
+    function loadFooter()
+    {
+        console.info("Footer Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "./Views/partials/footer.html");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+                let footer = document.getElementsByTagName("footer")[0];
+
+                let footerData = XHR.responseText;
+
+                footer.innerHTML = footerData;
+            }
+        });
+    }
+
+    function AboutContent()
+    {
+        console.info("About Content Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "./Views/content/about.html");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+                let main = document.getElementsByTagName("main")[0];
+
+                let mainData = XHR.responseText;
+
+                main.innerHTML = mainData;
+            }
+        });
+    }
+
+    function ContactContent()
+    {
+        console.info("Contact Content Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "./Views/content/contact.html");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+                let main = document.getElementsByTagName("main")[0];
+
+                let mainData = XHR.responseText;
+
+                main.innerHTML = mainData;
+
+                validateForm();
+            }
+        });
+    }
+
+    function HomeContent()
+    {
+        console.info("Home Content Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "/Views/content/home.html");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+                let main = document.getElementsByTagName("main")[0];
+
+                let mainData = XHR.responseText;
+
+                main.innerHTML = mainData;
+            }
+        });
+    }
+
+    function ProductsContent()
+    {
+        console.info("Products Content Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "./Views/content/products.html");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+                let main = document.getElementsByTagName("main")[0];
+
+                let mainData = XHR.responseText;
+
+                main.innerHTML = mainData;
+
+                loadAddressBookData();
+            }
+        });
+    }
+
+    function ServicesContent()
+    {
+        console.info("Services Content Loading...");
+
+        // step 1 - creates the XHR object
+        let XHR = new XMLHttpRequest();
+
+        // step 2 - configures the message
+        XHR.open("GET", "./Views/content/services.html");
+
+        // step 3 - Executes the request
+        XHR.send();
+
+        XHR.addEventListener("readystatechange", function(){
+            if((XHR.readyState === 4) && (XHR.status === 200))
+            {
+                let main = document.getElementsByTagName("main")[0];
+
+                let mainData = XHR.responseText;
+
+                main.innerHTML = mainData;
+            }
+        });
+    }
 
 
     // named function
     function Start()
     {
+        console.log('%cApp Started...', "color:white; font-size: 24px;");   
 
-       let title = highlightActiveLink();
-    if(true && title == "joseph's den"){
-
-   
-       let success = addParagraphsToJumbotron();
-
-
-       
-
-
+        InitializeSite();
     } 
-    if(true && title == "projects"){
-        
-        let success = addParagraphsToProjecttron();
- 
-      
-    
- 
-     } 
-
-     if(true && title == "contact me"){
-
-        let formValidated = validateForm();
-        
- 
-     } 
-}
-    
-
 
 
     window.addEventListener("load", Start);
